@@ -18,6 +18,8 @@
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
+  services.accounts-daemon.enable = true;
+
   # Keyboard
   services.xserver.xkb = {
     layout = "us";
