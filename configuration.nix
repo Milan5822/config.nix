@@ -1,6 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page.
-
 { config, pkgs, ... }:
 
 {
@@ -16,10 +13,8 @@
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
-  # Default timezone
+  # Timezone and locale
   time.timeZone = "Europe/Amsterdam";
-
-  # Default locale
   i18n.defaultLocale = "en_US.UTF-8";
 
   # GNOME
@@ -43,7 +38,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  # Your applications/packages
+  # Packages
   environment.systemPackages = with pkgs; [
     python3
     python3Packages.pygobject3
@@ -59,12 +54,10 @@
     vlc
   ];
 
-  # Firefox
   programs.firefox.enable = true;
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Don't change this after installation
+  # Houd deze waarde gelijk aan de NixOS-release waarmee je systeem is geïnstalleerd.
   system.stateVersion = "26.05";
 }
