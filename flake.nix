@@ -9,6 +9,8 @@
 
       modules = [
         ./configuration.nix
+        ./configuration.nix
+        ./hosts/laptop-01/hardware-configuration.nix
       ];
     };
   };
