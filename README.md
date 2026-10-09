@@ -1,5 +1,10 @@
 # Handleiding: NixOS configuratie en GitHub
 
+## Kies wat je wilt doen
+
+- [Een nieuwe NixOS-laptop instellen](#nixos-op-een-nieuwe-laptop-instellen)
+- [Bestanden vanuit Windows naar GitHub pushen](#bestanden-vanuit-windows-naar-github-pushen)
+
 ## NixOS op een nieuwe laptop instellen
 
 Alle laptops gebruiken dezelfde algemene instellingen uit `configuration.nix` in de hoofdmap. Elke laptop heeft daarnaast een eigen hardwarebestand in `hosts/`.
@@ -72,6 +77,8 @@ sudo nixos-rebuild switch --extra-experimental-features 'nix-command flakes' --f
 
 Gebruik niet `#laptop-01` voor een nieuwe laptop: daarmee selecteer je de configuratie en hardware van de bestaande laptop-01.
 
+[← Terug naar de keuzes](#kies-wat-je-wilt-doen)
+
 ---
 
 ## Bestanden vanuit Windows naar GitHub pushen
@@ -136,3 +143,5 @@ Hiermee stuur je de opgeslagen wijzigingen naar GitHub. Als Git daarom vraagt, m
 
 - **`nothing to commit`:** er zijn geen nieuwe wijzigingen gevonden. Controleer of je de bestanden in de repositorymap hebt gezet.
 - **Aanmeldfout bij GitHub:** meld je aan wanneer Git daarom vraagt en probeer daarna opnieuw `git push`.
+
+[← Terug naar de keuzes](#kies-wat-je-wilt-doen)
