@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Bootloader
@@ -6,7 +6,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Networking
-  networking.hostName = "nixos";
+  networking.hostName = lib.mkDefault "nixos";
   networking.networkmanager.enable = true;
 
   # Timezone and locale
@@ -57,5 +57,5 @@
   nixpkgs.config.allowUnfree = true;
 
   # Houd deze waarde gelijk aan de NixOS-release waarmee je systeem is geïnstalleerd.
-  system.stateVersion = "26.05";
+  system.stateVersion = lib.mkDefault "26.05";
 }
