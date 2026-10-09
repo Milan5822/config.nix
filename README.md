@@ -1,54 +1,51 @@
-# NixOS-laptops instellen
+# NixOS op een nieuwe laptop
 
-Deze repository deelt programma's en instellingen via `configuration.nix`. Iedere laptop heeft daarnaast een eigen hostconfiguratie en hardwareconfiguratie in `hosts/`.
+Deze repository gebruikt voor iedere laptop dezelfde algemene instellingen uit `configuration.nix` in de hoofdmap. Elke laptop heeft daarnaast alleen een eigen `hardware-configuration.nix` in `hosts/`. De flake kiest automatisch de juiste hardware en hostnaam.
 
-Laptop-01 blijft werken met de bestaande hostnaam `nixos`. De gedeelde configuratie gebruikt `nixos` en `stateVersion` 26.05 als standaardwaarden. Een hostbestand kan die waarden voor zijn eigen laptop overschrijven.
+## Een nieuwe laptop instellen
 
-De gedeelde configuratie maakt de gebruiker `milan` aan. Gebruik die accountnaam op de nieuwe laptop, of pas `users.users.milan` aan in `configuration.nix`.
-
-## Een laptop-02 tot en met laptop-05 toevoegen
-
-1. Installeer NixOS 26.05 op de laptop en verbind met internet.
-2. Open een terminal en maak Git tijdelijk beschikbaar:
+1. Installeer NixOS en maak verbinding met internet.
+2. Open de terminal. Als Git nog niet beschikbaar is, start het tijdelijk met:
 
    ```sh
    nix-shell -p git
    ```
 
-3. Haal deze repository op:
+3. Haal de configuratie op:
 
    ```sh
    git clone https://github.com/Milan5822/config.nix.git ~/config.nix
    cd ~/config.nix
    ```
 
-4. Kies het nummer van deze laptop. Vervang `laptop-02` in het commando hieronder door `laptop-03`, `laptop-04` of `laptop-05` wanneer dat de juiste map is. Genereer de hardwareconfiguratie op de laptop zelf:
+4. Kies een laptopnummer dat nog niet in gebruik is. Voor laptop-02 voer je op die laptop uit:
 
    ```sh
    sudo nixos-generate-config --show-hardware-config > hosts/laptop-02/hardware-configuration.nix
    ```
 
-   Dit vervangt de lege placeholder met de hardwaregegevens van de huidige laptop. Gebruik nooit hardwaregegevens van een andere computer.
+   Dit vult het hardwarebestand met gegevens van deze laptop. Gebruik voor een volgende laptop het bijbehorende nummer in het pad.
 
-5. Controleer de hostconfiguratie in `hosts/laptop-02/configuration.nix`. De hostnaam moet bij de gekozen map passen. `stateVersion` moet overeenkomen met de NixOS-versie waarmee deze laptop oorspronkelijk is geïnstalleerd. Als die versie anders is dan 26.05, pas dan alleen de `stateVersion` in dit hostbestand aan.
-
-6. Test op deze laptop. Vervang `laptop-02` door het juiste hostnummer:
+5. Test de configuratie op de laptop:
 
    ```sh
    sudo nixos-rebuild test --extra-experimental-features 'nix-command flakes' --flake ~/config.nix#laptop-02
    ```
 
-7. Werkt alles goed? Activeer de configuratie en push de hostbestanden naar GitHub:
+6. Als de test goed werkt, activeer de configuratie:
 
    ```sh
    sudo nixos-rebuild switch --extra-experimental-features 'nix-command flakes' --flake ~/config.nix#laptop-02
-   git add hosts/laptop-02
-   git commit -m "Laptop-02 hardware toegevoegd"
+   ```
+
+7. Sla het nieuwe hardwarebestand op in GitHub:
+
+   ```sh
+   git add hosts/laptop-02/hardware-configuration.nix
+   git commit -m "Hardware voor laptop-02 toevoegen"
    git push
    ```
 
-Laptop-03, laptop-04 en laptop-05 hebben al een hostmap, flake-vermelding en instellingenbestand. Voor die laptops hoef je alleen hun hardwarebestand te vullen met de opdracht uit stap 4 en de juiste hostnaam in de opdrachten te gebruiken.
+## Een laptopnummer dat nog niet bestaat
 
-## Een volgende laptop toevoegen
-
-Als laptop-02 tot en met laptop-05 allemaal in gebruik zijn, maak dan een nieuwe map onder `hosts/`, voeg een `nixosConfigurations`-vermelding toe in `flake.nix` en maak een hostbestand met de eigen hostnaam en `stateVersion`. Gebruik het hardwarebestand dat op die laptop is gegenereerd.
+Maak in `hosts/` een map met het volgende nummer en maak daarin een leeg bestand `hardware-configuration.nix`. Voeg vervolgens in `flake.nix` een nieuwe `nixosConfigurations`-vermelding toe, net als bij de andere laptops. Daar verwijs je naar `configuration.nix` in de hoofdmap, stel je de hostnaam in en laad je het hardwarebestand uit de nieuwe map. De handleiding en configuratie hoeven geen apart `configuration.nix`-bestand per laptop te hebben.

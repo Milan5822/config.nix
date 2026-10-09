@@ -17,7 +17,7 @@
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
-        ./hosts/laptop-02/configuration.nix
+        ({ ... }: { networking.hostName = "laptop-02"; })
         ./hosts/laptop-02/hardware-configuration.nix
       ];
     };
@@ -26,7 +26,7 @@
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
-        ./hosts/laptop-03/configuration.nix
+        ({ ... }: { networking.hostName = "laptop-03"; })
         ./hosts/laptop-03/hardware-configuration.nix
       ];
     };
@@ -35,7 +35,7 @@
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
-        ./hosts/laptop-04/configuration.nix
+        ({ ... }: { networking.hostName = "laptop-04"; })
         ./hosts/laptop-04/hardware-configuration.nix
       ];
     };
@@ -44,7 +44,7 @@
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
-        ./hosts/laptop-05/configuration.nix
+        ({ ... }: { networking.hostName = "laptop-05"; })
         ./hosts/laptop-05/hardware-configuration.nix
       ];
     };
